@@ -23,8 +23,6 @@ RUN chmod +x /usr/bin/wait-for
 RUN mkdir -p /etc/kamailio
 COPY kamailio/kamailio-local.cfg.example /etc/kamailio/kamailio-local.cfg.example
 COPY kamailio/kamailio.cfg /etc/kamailio/kamailio.cfg
-COPY kamailio/routing.cfg /etc/kamailio/routing.cfg
-COPY kamailio/cdrs.cfg /etc/kamailio/cdrs.cfg
 
 ADD docker-entrypoint.sh /docker-entrypoint.sh
 RUN chmod +x /docker-entrypoint.sh
