@@ -1,0 +1,17 @@
+.DS_Store
+
+# C extensions
+*.so
+
+# Editor related
+.vscode
+*.swp
+*.swo
+
+# other
+tmp/
+
+# docker-compose data dir
+data/
+docker_tmp/
+.dockerignore

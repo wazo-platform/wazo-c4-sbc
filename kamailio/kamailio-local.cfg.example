@@ -1,0 +1,4 @@
+# *** Value defines - IDs used later in config
+
+/* add listen protocol, address and port / advertise (optional) */
+# #!define LISTEN udp:192.168.1.1:5060 advertise c4.wazo.community

@@ -1,0 +1,7 @@
+Format: http://dep.debian.net/deps/dep5
+Upstream-Name: wazo-c4-sbc
+Source: https://github.com/wazo-platform/wazo-c4-sbc.git
+
+Files: *
+Copyright: 2007-2018 The Wazo Authors
+License: GPL-3.0
