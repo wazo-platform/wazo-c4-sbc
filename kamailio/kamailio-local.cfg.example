@@ -2,3 +2,10 @@
 
 /* add listen protocol, address and port / advertise (optional) */
 # #!define LISTEN udp:192.168.1.1:5060 advertise c4.wazo.community
+
+/* DMQ settings */
+# #!define WITH_DMQ 1
+# #!define DMQ_PORT 5062
+# #!define DMQ_LISTEN udp:192.168.1.1:5062
+# #!define DMQ_SERVER_ADDRESS udp:192.168.1.1:5062
+# #!define DMQ_NOTIFICATION_ADDRESS udp:192.168.1.1:5062
