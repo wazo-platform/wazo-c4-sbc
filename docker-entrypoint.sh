@@ -2,7 +2,7 @@
 date
 
 mkdir -p /etc/kamailio/
-echo '#!define LISTEN '$LISTEN >> /etc/kamailio/kamailio-local.cfg
+echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
 
 #--- KAMAILIO ---#
 export PATH_KAMAILIO_CFG=/etc/kamailio/kamailio.cfg
