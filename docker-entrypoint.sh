@@ -14,6 +14,12 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
 fi
 
+if ! [ -z "$DISPATCHER_LIST" ]; then
+    echo "$DISPATCHER_LIST" | sed 's/\\n */\n/g' >> /etc/kamailio/dispatcher.list
+else
+    echo '# setid(int) destination(sip uri) flags(int,opt) priority(int,opt) attributes(str,opt)' > /etc/kamailio/dispatcher.list
+fi
+
 #--- KAMAILIO ---#
 export PATH_KAMAILIO_CFG=/etc/kamailio/kamailio.cfg
 kamailio=$(which kamailio)
