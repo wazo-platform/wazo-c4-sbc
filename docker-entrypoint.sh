@@ -4,6 +4,7 @@ date
 IP_ADDRESS=$(hostname -i)
 
 mkdir -p /etc/kamailio/
+
 echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
 if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define WITH_DMQ 1' >> /etc/kamailio/kamailio-local.cfg
