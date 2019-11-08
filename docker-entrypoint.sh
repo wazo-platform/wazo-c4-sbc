@@ -6,6 +6,9 @@ IP_ADDRESS=$(hostname -i)
 mkdir -p /etc/kamailio/
 
 echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
+if ! [ -z "$TESTING" ]; then
+    echo '#!define TESTING 1' >> /etc/kamailio/kamailio-local.cfg
+fi
 if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define WITH_DMQ 1' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_PORT "'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
