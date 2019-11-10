@@ -9,6 +9,9 @@ echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
 if ! [ -z "$TESTING" ]; then
     echo '#!define TESTING 1' >> /etc/kamailio/kamailio-local.cfg
 fi
+if ! [ -z "$DISPATCHER_ALG" ]; then
+    echo '#!define DISPATCHER_ALG "'$DISPATCHER_ALG'"' >> /etc/kamailio/kamailio-local.cfg
+fi
 if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define WITH_DMQ 1' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_PORT "'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
