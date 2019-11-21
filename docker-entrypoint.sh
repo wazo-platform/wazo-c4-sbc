@@ -1,9 +1,8 @@
 #!/bin/sh
 date
 
+HOSTNAME=$(hostname)
 IP_ADDRESS=$(hostname -i)
-
-mkdir -p /etc/kamailio/
 
 echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
 if ! [ -z "$TESTING" ]; then
@@ -20,10 +19,10 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
 fi
 
-if ! [ -z "$DISPATCHER_LIST" ]; then
-    echo "$DISPATCHER_LIST" | sed 's/\\n */\n/g' >> /etc/kamailio/dispatcher.list
-else
-    echo '# setid(int) destination(sip uri) flags(int,opt) priority(int,opt) attributes(str,opt)' > /etc/kamailio/dispatcher.list
+if ! [ -z "$WITH_CONSUL" ]; then
+    curl -X PUT \
+    -d '{"ID": "'$HOSTNAME'", "Name": "sbc", "Tags": [ "sbc", "kamailio" ], "Address": "'$IP_ADDRESS'", "Port": '$PORT'}' \
+    $CONSUL_URI:$CONSUL_PORT/v1/agent/service/register
 fi
 
 #--- KAMAILIO ---#
