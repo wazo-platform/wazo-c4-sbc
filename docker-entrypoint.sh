@@ -3,7 +3,6 @@ date
 
 HOSTNAME=$(hostname)
 IP_ADDRESS=$(hostname -i)
-export PATH_KAMAILIO_CFG=/etc/kamailio/kamailio.cfg
 export KAMAILIO=$(which kamailio)
 
 echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
@@ -22,11 +21,11 @@ if ! [ -z "$WITH_DMQ" ]; then
 fi
 
 # Test the config syntax
-$KAMAILIO -f $PATH_KAMAILIO_CFG -c
+$KAMAILIO -f $KAMAILIO_CONF -c
 
 curl -X PUT \
     -d '{"ID": "'$HOSTNAME'", "Name": "sbc", "Tags": [ "sbc", "kamailio" ], "Address": "'$IP_ADDRESS'", "Port": '$SIP_PORT'}' \
-    http://consul:8500/v1/agent/service/register
+    http://${CONSUL_URI}/v1/agent/service/register
 
 # Run
 supervisord=$(which supervisord)
