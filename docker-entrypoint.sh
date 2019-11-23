@@ -1,9 +1,10 @@
 #!/bin/sh
-date
 
 HOSTNAME=$(hostname)
 IP_ADDRESS=$(hostname -i)
 export KAMAILIO=$(which kamailio)
+
+mkdir -p /etc/kamailio/
 
 echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
 if ! [ -z "$TESTING" ]; then
@@ -20,13 +21,30 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
 fi
 
-# Test the config syntax
+# test the config syntax
 $KAMAILIO -f $KAMAILIO_CONF -c
 
-curl -X PUT \
-    -d '{"ID": "'$HOSTNAME'", "Name": "sbc", "Tags": [ "sbc", "kamailio" ], "Address": "'$IP_ADDRESS'", "Port": '$SIP_PORT'}' \
-    http://${CONSUL_URI}/v1/agent/service/register
+# register/de-register service in consul
+curl -i -X PUT http://${CONSUL_URI}/v1/agent/service/register -d '{
+    "ID": "'$HOSTNAME'",
+    "Name": "sbc",
+    "Tags": ["sbc", "kamailio"],
+    "Address": "'$IP_ADDRESS'",
+    "Port": '$SIP_PORT'
+}'
+exit_script() {
+    curl -X PUT http://${CONSUL_URI}/v1/agent/service/deregister/$HOSTNAME
+    [ -f /var/run/supervisor.sock ] && supervisorctl -c /etc/supervisor/conf.d/supervisord.conf shutdown
+    exit 143; # 128 + 15 -- SIGTERM
+}
+trap exit_script SIGINT SIGTERM
 
-# Run
+# run through supervisor
 supervisord=$(which supervisord)
-$supervisord -n -c /etc/supervisor/conf.d/supervisord.conf
+$supervisord -n -c /etc/supervisor/conf.d/supervisord.conf &
+
+# wait for signals
+while true; do sleep 1; done
+
+# exit
+exit_script
