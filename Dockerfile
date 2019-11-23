@@ -3,7 +3,6 @@ LABEL maintainer="Wazo Authors <dev@wazo.community>"
 ENV VERSION 1.0.0
 
 RUN true \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
     && apk add --update \
         bash \
         supervisor \
@@ -19,7 +18,11 @@ RUN true \
         kamailio-extras \
         kamailio-outbound \
         kamailio-http_async \
-        kamailio-ev \
+        kamailio-ev
+
+RUN true \
+    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
+    && apk add --update \
         consul-template \
         envconsul \
     && rm -rf /var/lib/apt/lists/*

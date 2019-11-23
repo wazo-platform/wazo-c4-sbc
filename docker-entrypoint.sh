@@ -1,4 +1,8 @@
 #!/bin/sh
+date
+wait-for -t 60 $ROUTER_CONFD_URI
+wait-for -t 60 $CONSUL_URI
+sleep 2
 
 HOSTNAME=$(hostname)
 IP_ADDRESS=$(hostname -i)
@@ -35,6 +39,7 @@ curl -i -X PUT http://${CONSUL_URI}/v1/agent/service/register -d '{
 exit_script() {
     curl -X PUT http://${CONSUL_URI}/v1/agent/service/deregister/$HOSTNAME
     [ -f /var/run/supervisor.sock ] && supervisorctl -c /etc/supervisor/conf.d/supervisord.conf shutdown
+    date
     exit 143; # 128 + 15 -- SIGTERM
 }
 trap exit_script SIGINT SIGTERM
