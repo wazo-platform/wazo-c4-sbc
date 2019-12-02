@@ -1,0 +1,4 @@
+kamailio/kamailio.cfg usr/share/wazo-c4-sbc
+kamailio/kamailio-local.cfg.example usr/share/wazo-c4-sbc
+kamailio/xhttp.cfg usr/share/wazo-c4-sbc
+kamailio/dispatcher.list usr/share/wazo-c4-sbc
