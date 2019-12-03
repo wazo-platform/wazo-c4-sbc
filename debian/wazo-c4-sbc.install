@@ -2,6 +2,6 @@ kamailio/kamailio.cfg usr/share/wazo-c4-sbc
 kamailio/kamailio-local.cfg.example usr/share/wazo-c4-sbc
 kamailio/xhttp.cfg usr/share/wazo-c4-sbc
 kamailio/dispatcher.list usr/share/wazo-c4-sbc
-kamailio/dbtext/domain usr/share/wazo-c4-router/dbtext
-kamailio/dbtext/domain_attrs usr/share/wazo-c4-router/dbtext
-kamailio/dbtext/version usr/share/wazo-c4-router/dbtext
+kamailio/dbtext/domain usr/share/wazo-c4-sbc/dbtext
+kamailio/dbtext/domain_attrs usr/share/wazo-c4-sbc/dbtext
+kamailio/dbtext/version usr/share/wazo-c4-sbc/dbtext
