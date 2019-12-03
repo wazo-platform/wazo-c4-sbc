@@ -26,6 +26,13 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
 fi
 
+if ! [ -z "$LISTEN_ADVERTISE" ]; then
+    echo '#!define LISTEN_ADVERTISE '$LISTEN_ADVERTISE >> /etc/kamailio/kamailio-local.cfg
+fi
+if ! [ -z "$ALIAS" ]; then
+    echo '#!define ALIAS 192.168.112.11'
+fi
+
 # test the config syntax
 $KAMAILIO -f $KAMAILIO_CONF -c
 

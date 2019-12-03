@@ -12,6 +12,7 @@ RUN true \
         netcat-openbsd \
         kamailio \
         kamailio-db \
+        kamailio-dbtext \
         kamailio-jansson \
         kamailio-json \
         kamailio-utils \
@@ -35,6 +36,7 @@ COPY kamailio/kamailio-local.cfg.example /etc/kamailio/kamailio-local.cfg.exampl
 COPY kamailio/kamailio.cfg /etc/kamailio/kamailio.cfg
 COPY kamailio/xhttp.cfg /etc/kamailio/xhttp.cfg
 COPY kamailio/dispatcher.list /etc/kamailio/dispatcher.list
+COPY kamailio/dbtext /etc/kamailio/dbtext
 COPY consul-templates /consul-templates
 COPY supervisord/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
