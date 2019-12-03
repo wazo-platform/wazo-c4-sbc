@@ -4,10 +4,11 @@ set -e
 
 case "$1" in
     configure)
-        mkdir -p /etc/kamailio/wazo-c4-router
-        cp /usr/share/wazo-c4-router/*.cfg /etc/kamailio/
-        cp /usr/share/wazo-c4-router/*.cfg.example /etc/kamailio/
-        cp /usr/share/wazo-c4-router/dispatcher.list /etc/kamailio/dispatcher.list
+        mkdir -p /etc/kamailio /etc/kamailio/dbtext
+        cp /usr/share/wazo-c4-sbc/*.cfg /etc/kamailio/
+        cp /usr/share/wazo-c4-sbc/*.cfg.example /etc/kamailio/
+        cp /usr/share/wazo-c4-sbc/dbtext/* /etc/kamailio/dbtext/
+        cp /usr/share/wazo-c4-sbc/dispatcher.list /etc/kamailio/dispatcher.list
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
