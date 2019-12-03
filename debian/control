@@ -8,7 +8,7 @@ Standards-Version: 4.2.1
 Package: wazo-c4-sbc
 Architecture: all
 Section: comm
-Depends: ${misc:Depends}
+Depends: kamailio, kamailio-json-modules, ${misc:Depends}
 Description: Kamailio configuration files for Wazo C4 SBC component
  Wazo is a system based on a powerful IPBX, to bring an easy to
  install solution for telephony and related services.
