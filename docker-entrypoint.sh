@@ -30,7 +30,7 @@ if ! [ -z "$LISTEN_ADVERTISE" ]; then
     echo '#!define LISTEN_ADVERTISE '$LISTEN_ADVERTISE >> /etc/kamailio/kamailio-local.cfg
 fi
 if ! [ -z "$ALIAS" ]; then
-    echo '#!define ALIAS 192.168.112.11'
+    echo '#!define ALIAS '$ALIAS >> /etc/kamailio/kamailio-local.cfg
 fi
 
 # test the config syntax
