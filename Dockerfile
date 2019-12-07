@@ -13,6 +13,7 @@ bash \
 supervisor \
 sipsak \
 sngrep \
+net-tools \
 curl \
 kamailio \
 sudo \
