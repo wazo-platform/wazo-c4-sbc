@@ -1,35 +1,38 @@
-FROM alpine:3.10
+FROM debian:buster-slim
 LABEL maintainer="Wazo Authors <dev@wazo.community>"
 ENV VERSION 1.0.0
 
-RUN true \
-    && apk add --update \
-        bash \
-        supervisor \
-        sipsak \
-        sngrep \
-        curl \
-        netcat-openbsd \
-        kamailio \
-        kamailio-db \
-        kamailio-dbtext \
-        kamailio-jansson \
-        kamailio-json \
-        kamailio-utils \
-        kamailio-extras \
-        kamailio-outbound \
-        kamailio-http_async \
-        kamailio-ev
+RUN apt-get update -qq && apt-get install -y --no-install-recommends gnupg2
+RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xfb40d3e6508ea4c8
 
-RUN true \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && apk add --update \
-        consul-template \
-        envconsul \
-    && rm -rf /var/lib/apt/lists/*
+RUN echo "deb     http://deb.kamailio.org/kamailio52 buster main" >> /etc/apt/sources.list
+RUN echo "deb-src http://deb.kamailio.org/kamailio52 buster main" >> /etc/apt/sources.list
+
+RUN apt-get update -qq && apt-get install -y --no-install-recommends \
+bash \
+supervisor \
+sipsak \
+sngrep \
+curl \
+kamailio \
+sudo \
+netcat \
+consul \
+iproute2 \
+kamailio-json-modules \
+kamailio-utils-modules \
+kamailio-extra-modules \
+kamailio-xml-modules \
+&& apt-get clean
 
 COPY ./scripts/wait-for /usr/bin/wait-for
 RUN chmod +x /usr/bin/wait-for
+
+RUN curl -SLOk https://releases.hashicorp.com/consul-template/0.23.0/consul-template_0.23.0_linux_amd64.tgz \
+    && tar -xvf consul-template_0.23.0_linux_amd64.tgz \
+    && chmod a+x consul-template \
+    && mv consul-template /usr/sbin/ \
+    && rm -rf consul-template*
 
 RUN mkdir -p /etc/kamailio
 COPY kamailio/kamailio-local.cfg.example /etc/kamailio/kamailio-local.cfg.example
