@@ -5,6 +5,11 @@ if ! [ -z "$CONSUL_URI" ]; then
     sleep 2
 fi
 
+if [ -z "$INTERFACE" ]; then
+    INTERFACE="eth0"
+fi
+PUBLIC_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE'" { gsub(/\/.*/, "", $4); print $4 }')
+
 HOSTNAME=$(hostname)
 IP_ADDRESS=$(hostname -i)
 export KAMAILIO=$(which kamailio)
@@ -22,7 +27,7 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define WITH_DMQ 1' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_PORT "'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_LISTEN '$DMQ_LISTEN >> /etc/kamailio/kamailio-local.cfg
-    echo '#!define DMQ_SERVER_ADDRESS "sip:'$IP_ADDRESS':'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
+    echo '#!define DMQ_SERVER_ADDRESS "sip:'$PUBLIC_IP':'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
 fi
 
@@ -41,14 +46,14 @@ curl -i -X PUT http://${CONSUL_URI}/v1/agent/service/register -d '{
     "ID": "'$HOSTNAME'",
     "Name": "sbc",
     "Tags": ["sbc", "kamailio"],
-    "Address": "'$IP_ADDRESS'",
+    "Address": "'$PUBLIC_IP'",
     "Port": '$SIP_PORT',
     "Check": {
         "ID": "XHTTP",
         "Name": "XHTTP API on port 8000",
         "DeregisterCriticalServiceAfter": "10m",
         "Method": "GET",
-        "HTTP": "http://'$IP_ADDRESS':8000/status",
+        "HTTP": "http://'$PUBLIC_IP':8000/status",
         "Timeout": "1s",
         "Interval": "10s"
     }
