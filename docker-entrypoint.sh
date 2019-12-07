@@ -6,15 +6,15 @@ if ! [ -z "$CONSUL_URI" ]; then
 fi
 
 if [ -z "$INTERFACE_SIP" ]; then
-    INTERFACE="eth0"
+    INTERFACE_SIP="eth0"
 fi
 if [ -z "$INTERFACE_DMQ" ]; then
-    INTERFACE_DMQ="$INTERFACE"
+    INTERFACE_DMQ="$INTERFACE_SIP"
 fi
 if [ -z "$INTERFACE_XHTTP" ]; then
-    INTERFACE_XHTTP="$INTERFACE"
+    INTERFACE_XHTTP="$INTERFACE_SIP"
 fi
-SIP_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE'" { gsub(/\/.*/, "", $4); print $4 }')
+SIP_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE_SIP'" { gsub(/\/.*/, "", $4); print $4 }')
 DMQ_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE_DMQ'" { gsub(/\/.*/, "", $4); print $4 }')
 XHTTP_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE_XHTTP'" { gsub(/\/.*/, "", $4); print $4 }')
 
