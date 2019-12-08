@@ -14,6 +14,7 @@ supervisor \
 sipsak \
 sngrep \
 net-tools \
+sip-tester \
 curl \
 kamailio \
 sudo \
