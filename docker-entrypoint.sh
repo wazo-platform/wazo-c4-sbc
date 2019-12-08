@@ -5,6 +5,9 @@ if ! [ -z "$CONSUL_URI" ]; then
     sleep 2
 fi
 
+if [ -z "$DISPATCHER_LIST_TPL_FILE" ]; then
+    export DISPATCHER_LIST_TPL_FILE="dispatcher-list.tpl"
+fi
 if [ -z "$INTERFACE_SIP" ]; then
     INTERFACE_SIP="eth0"
 fi
