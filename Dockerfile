@@ -14,6 +14,7 @@ supervisor \
 sipsak \
 sngrep \
 net-tools \
+inetutils-ping \
 sip-tester \
 curl \
 kamailio \
