@@ -1,9 +1,17 @@
 #!/bin/sh
 date
+
+# Wait For
 if ! [ -z "$CONSUL_URI" ]; then
     wait-for -t 60 $CONSUL_URI
     sleep 2
 fi
+if ! [ -z "$REDIS_URI" ]; then
+    wait-for -t 60 $REDIS_URI
+    sleep 2
+fi
+
+# Interfaces and IPs
 if [ -z "$INTERFACE_SIP" ]; then
     INTERFACE_SIP="eth0"
 fi
@@ -24,8 +32,9 @@ fi
 HOSTNAME=$(hostname)
 export KAMAILIO=$(which kamailio)
 
-mkdir -p /etc/kamailio/
 
+# Kamailio-local.cfg
+mkdir -p /etc/kamailio/ /etc/kamailio/dbtext
 echo '#!define LISTEN '$LISTEN > /etc/kamailio/kamailio-local.cfg
 echo '#!define LISTEN_XHTTP tcp:'$INTERFACE_XHTTP':'$XHTTP_PORT >> /etc/kamailio/kamailio-local.cfg
 if ! [ -z "$TESTING" ]; then
@@ -34,6 +43,12 @@ fi
 if ! [ -z "$DISPATCHER_ALG" ]; then
     echo '#!define DISPATCHER_ALG "'$DISPATCHER_ALG'"' >> /etc/kamailio/kamailio-local.cfg
 fi
+if ! [ -z "$LISTEN_ADVERTISE" ]; then
+    echo '#!define LISTEN_ADVERTISE '$LISTEN_ADVERTISE >> /etc/kamailio/kamailio-local.cfg
+fi
+if ! [ -z "$ALIAS" ]; then
+    echo '#!define ALIAS '$ALIAS >> /etc/kamailio/kamailio-local.cfg
+fi
 if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define WITH_DMQ 1' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_PORT "'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
@@ -41,12 +56,11 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define DMQ_SERVER_ADDRESS "sip:'$DMQ_IP':'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
 fi
-
-if ! [ -z "$LISTEN_ADVERTISE" ]; then
-    echo '#!define LISTEN_ADVERTISE '$LISTEN_ADVERTISE >> /etc/kamailio/kamailio-local.cfg
+if ! [ -z "$WITH_REDIS_DIALOG" ]; then
+    echo '#!define WITH_REDIS_DIALOG 1' >> /etc/kamailio/kamailio-local.cfg
 fi
-if ! [ -z "$ALIAS" ]; then
-    echo '#!define ALIAS '$ALIAS >> /etc/kamailio/kamailio-local.cfg
+if ! [ -z "$DBURL_DIALOG" ]; then
+    echo '#!define DBURL_DIALOG "'$DBURL_DIALOG'"' >> /etc/kamailio/kamailio-local.cfg
 fi
 
 # test the config syntax

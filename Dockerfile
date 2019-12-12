@@ -27,6 +27,7 @@ iproute2 \
 redis-tools \
 kamailio-json-modules \
 kamailio-utils-modules \
+kamailio-redis-modules \
 kamailio-extra-modules \
 kamailio-xml-modules \
 && apt-get clean
