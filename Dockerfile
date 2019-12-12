@@ -21,7 +21,10 @@ kamailio \
 sudo \
 netcat \
 consul \
+jq \
+watch \
 iproute2 \
+redis-tools \
 kamailio-json-modules \
 kamailio-utils-modules \
 kamailio-extra-modules \
