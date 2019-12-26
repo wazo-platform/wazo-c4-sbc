@@ -1,0 +1,4 @@
+- project:
+    templates:
+      - wazo-c4-docker-build-test-template
+      - debian-packaging-template
