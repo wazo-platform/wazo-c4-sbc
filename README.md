@@ -1,4 +1,4 @@
-# wazo-c4-scb
+# wazo-c4-sbc
 
 wazo-c4-sbc provides kamailio configuration for SBC component of the C4 infrastructure.
 
