@@ -26,7 +26,7 @@ DMQ_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE_DMQ'" { gsub(/\/.*/, "", $4); prin
 XHTTP_IP=$(ip -o -4 a | awk '$2 == "'$INTERFACE_XHTTP'" { gsub(/\/.*/, "", $4); print $4 }')
 
 if [ -z "$XHTTP_PORT" ]; then
-    XHTTP_PORT="8000"
+    XHTTP_PORT="9600"
 fi
 
 HOSTNAME=$(hostname)
@@ -75,7 +75,7 @@ curl -i -X PUT http://${CONSUL_URI}/v1/agent/service/register -d '{
     "Port": '$SIP_PORT',
     "Check": {
         "ID": "XHTTP",
-        "Name": "XHTTP API on port 8000",
+        "Name": "XHTTP API on port 9600",
         "DeregisterCriticalServiceAfter": "10m",
         "Method": "GET",
         "HTTP": "http://'$XHTTP_IP':'$XHTTP_PORT'/status",
