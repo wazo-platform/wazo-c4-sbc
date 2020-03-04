@@ -5,8 +5,8 @@ ENV VERSION 1.0.0
 RUN apt-get update -qq && apt-get install -y --no-install-recommends gnupg2
 RUN apt-key adv --recv-keys --keyserver keyserver.ubuntu.com 0xfb40d3e6508ea4c8
 
-RUN echo "deb     http://deb.kamailio.org/kamailio52 buster main" >> /etc/apt/sources.list
-RUN echo "deb-src http://deb.kamailio.org/kamailio52 buster main" >> /etc/apt/sources.list
+RUN echo "deb     http://deb.kamailio.org/kamailio53 buster main" >> /etc/apt/sources.list
+RUN echo "deb-src http://deb.kamailio.org/kamailio53 buster main" >> /etc/apt/sources.list
 
 RUN apt-get update -qq && apt-get install -y --no-install-recommends \
 bash \
