@@ -55,6 +55,9 @@ if ! [ -z "$WITH_DMQ" ]; then
     echo '#!define DMQ_LISTEN '$DMQ_LISTEN >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_SERVER_ADDRESS "sip:'$DMQ_IP':'$DMQ_PORT'"' >> /etc/kamailio/kamailio-local.cfg
     echo '#!define DMQ_NOTIFICATION_ADDRESS "'$DMQ_NOTIFICATION_ADDRESS'"' >> /etc/kamailio/kamailio-local.cfg
+    if ! [ -z "$DMQ_PING_INTERVAL" ]; then
+         echo '#!define DMQ_PING_INTERVAL "'$DMQ_PING_INTERVAL'"' >> /etc/kamailio/kamailio-local.cfg
+    fi
 fi
 if ! [ -z "$WITH_REDIS_DIALOG" ]; then
     echo '#!define WITH_REDIS_DIALOG 1' >> /etc/kamailio/kamailio-local.cfg
@@ -62,6 +65,11 @@ fi
 if ! [ -z "$DBURL_DIALOG" ]; then
     echo '#!define DBURL_DIALOG "'$DBURL_DIALOG'"' >> /etc/kamailio/kamailio-local.cfg
 fi
+
+if ! [ -z "$NAT_PING_FROM" ]; then
+    echo '#!define NAT_PING_FROM "'$NAT_PING_FROM'"' >> /etc/kamailio/kamailio-local.cfg
+fi
+
 
 # test the config syntax
 $KAMAILIO -f $KAMAILIO_CONF -c
