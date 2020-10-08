@@ -1,3 +1,3 @@
 .PHONY: dockerfile
 dockerfile:
-	docker build -t wazopbx/wazo-c4-sbc:latest -f Dockerfile .
+	docker build -t wazoplatform/wazo-c4-sbc:latest -f Dockerfile .
